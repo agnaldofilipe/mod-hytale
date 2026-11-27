@@ -2,11 +2,16 @@ package com.hir.energy;
 
 import com.hir.HIRPlugin;
 import com.hypixel.hytale.component.Ref;
+import com.hypixel.hytale.math.util.ChunkUtil;
+import com.hypixel.hytale.math.vector.Transform;
 import com.hypixel.hytale.server.core.asset.type.blocktype.config.BlockType;
 import com.hypixel.hytale.server.core.modules.blockanimation.BlockAnimationModule;
+import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.world.World;
 import com.hypixel.hytale.server.core.universe.world.chunk.section.BlockSection;
+import com.hypixel.hytale.server.core.universe.world.chunk.section.ChunkSection;
 import com.hypixel.hytale.server.core.universe.world.storage.ChunkStore;
+import org.joml.Vector3d;
 import org.joml.Vector3i;
 
 import java.util.*;
@@ -74,16 +79,128 @@ public class HIREnergySystem {
     }
 
     /**
-     * Atualiza todas as redes mecanicas conhecidas no mundo.
+     * Varre automaticamente os chunks ao redor de cada jogador carregado no mundo
+     * para descobrir rodas d'agua e eixos recem colocados sem precisar de comandos.
      */
-    public void tickWorld(World world) {
-        if (world == null || !world.isAlive() || knownMachines.isEmpty()) {
+    public void discoverNearbyMachines(World world) {
+        if (world == null || world.getChunkStore() == null) {
             return;
         }
 
+        int wheelIndex = -1;
+        int shaftIndex = -1;
+        try {
+            if (BlockType.getAssetMap() != null) {
+                wheelIndex = BlockType.getAssetMap().getIndex(BLOCK_WATER_WHEEL);
+                shaftIndex = BlockType.getAssetMap().getIndex(BLOCK_SHAFT);
+            }
+        } catch (Exception ignored) {
+            return;
+        }
+
+        if (wheelIndex < 0 && shaftIndex < 0) {
+            return;
+        }
+
+        Collection<PlayerRef> players = world.getPlayerRefs();
+        if (players == null || players.isEmpty()) {
+            return;
+        }
+
+        for (PlayerRef playerRef : players) {
+            if (playerRef == null) continue;
+            Transform transform = playerRef.getTransform();
+            if (transform == null) continue;
+            Vector3d pos = transform.getPosition();
+            if (pos == null) continue;
+
+            int centerChunkX = ChunkUtil.chunkCoordinate(pos.x);
+            int centerChunkZ = ChunkUtil.chunkCoordinate(pos.z);
+
+            for (int dx = -1; dx <= 1; dx++) {
+                for (int dz = -1; dz <= 1; dz++) {
+                    int cx = centerChunkX + dx;
+                    int cz = centerChunkZ + dz;
+
+                    List<Ref<ChunkStore>> sections = world.getChunkStore().getLoadedSectionReferences(cx, cz);
+                    if (sections == null || sections.isEmpty()) {
+                        continue;
+                    }
+
+                    for (Ref<ChunkStore> ref : sections) {
+                        if (ref == null || !ref.isValid()) {
+                            continue;
+                        }
+
+                        BlockSection bs = ref.getStore().getComponent(ref, BlockSection.getComponentType());
+                        if (bs == null) {
+                            continue;
+                        }
+
+                        boolean hasWheel = (wheelIndex >= 0) && bs.contains(wheelIndex);
+                        boolean hasShaft = (shaftIndex >= 0) && bs.contains(shaftIndex);
+
+                        if (!hasWheel && !hasShaft) {
+                            continue;
+                        }
+
+                        ChunkSection cs = ref.getStore().getComponent(ref, ChunkSection.getComponentType());
+                        if (cs == null) {
+                            continue;
+                        }
+
+                        int secX = cs.getX();
+                        int secY = cs.getY();
+                        int secZ = cs.getZ();
+
+                        for (int y = 0; y < 32; y++) {
+                            for (int z = 0; z < 32; z++) {
+                                for (int x = 0; x < 32; x++) {
+                                    int bId = bs.get(x, y, z);
+                                    if ((wheelIndex >= 0 && bId == wheelIndex) || (shaftIndex >= 0 && bId == shaftIndex)) {
+                                        int wx = (secX << 5) + x;
+                                        int wy = (secY << 5) + y;
+                                        int wz = (secZ << 5) + z;
+                                        knownMachines.add(new Vector3i(wx, wy, wz));
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    /**
+     * Atualiza todas as redes mecanicas conhecidas no mundo.
+     */
+    public void tickWorld(World world) {
+        if (world == null || !world.isAlive()) {
+            return;
+        }
+
+        // 1. Descobre automaticamente rodas d'agua e eixos proximos aos jogadores
+        discoverNearbyMachines(world);
+
+        if (knownMachines.isEmpty()) {
+            return;
+        }
+
+        // 2. Remove posicoes onde o bloco foi quebrado ou substituido
+        Iterator<Vector3i> it = knownMachines.iterator();
+        while (it.hasNext()) {
+            Vector3i pos = it.next();
+            String id = getBlockId(world, pos.x, pos.y, pos.z);
+            if (!isMechanicalBlock(id)) {
+                it.remove();
+            }
+        }
+
+        // 3. Propagacao por grafo BFS em cada rede conectada
         Set<Vector3i> visited = new HashSet<>();
 
-        for (Vector3i startPos : knownMachines) {
+        for (Vector3i startPos : new ArrayList<>(knownMachines)) {
             if (visited.contains(startPos)) {
                 continue;
             }

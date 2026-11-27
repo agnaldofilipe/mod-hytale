@@ -32,6 +32,7 @@
       }
     ],
     "CustomModelAnimation": "Blocks/HIR/MechanicalShaft_Spin.blockyanim",
+    "CustomModelAnimationSpeed": 0.0,
     "Looping": true,
     "CustomModelScale": 1,
     "VariantRotation": "NESW",

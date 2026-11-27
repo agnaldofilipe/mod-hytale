@@ -19,5 +19,8 @@ target/
 *.log
 test-run/
 telemetry/
+Server/
+config.json
+logs/
 
 mods/

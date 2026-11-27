@@ -80,7 +80,11 @@ public class HIRWaterWheelManager {
             {1, 0, 0},
             {-1, 0, 0},
             {0, 0, 1},
-            {0, 0, -1}
+            {0, 0, -1},
+            {1, -1, 0},
+            {-1, -1, 0},
+            {0, -1, 1},
+            {0, -1, -1}
         };
 
         for (int[] offset : neighbors) {
@@ -96,31 +100,39 @@ public class HIRWaterWheelManager {
      * Detecta se ha agua em uma coordenada exata.
      */
     public boolean isWaterAt(World world, int x, int y, int z) {
+        if (world == null || world.getChunkStore() == null) {
+            return false;
+        }
+
         try {
             Ref<ChunkStore> ref = world.getChunkStore().getChunkSectionReferenceAtBlock(x, y, z);
-            if (ref == null || !ref.isValid()) {
-                return false;
-            }
+            if (ref != null && ref.isValid()) {
+                FluidSection fluidSection = ref.getStore().getComponent(ref, FluidSection.getComponentType());
+                if (fluidSection != null) {
+                    int localX = x & 31;
+                    int localY = y & 31;
+                    int localZ = z & 31;
 
-            FluidSection fluidSection = ref.getStore().getComponent(ref, FluidSection.getComponentType());
-            if (fluidSection == null) {
-                return false;
-            }
-
-            int localX = x & 31;
-            int localY = y & 31;
-            int localZ = z & 31;
-
-            Fluid fluid = fluidSection.getFluid(localX, localY, localZ);
-            if (fluid != null && !fluid.isUnknown()) {
-                String id = fluid.getId();
-                if (id != null && (id.equalsIgnoreCase("Water") || id.toLowerCase().contains("water"))) {
-                    return true;
+                    Fluid fluid = fluidSection.getFluid(localX, localY, localZ);
+                    if (fluid != null && !fluid.isUnknown()) {
+                        String id = fluid.getId();
+                        if (id != null && (id.equalsIgnoreCase("Water") || id.toLowerCase().contains("water"))) {
+                            return true;
+                        }
+                    }
                 }
             }
-        } catch (Exception e) {
-            // Ignora celulas fora de limites
+        } catch (Exception ignored) {
         }
+
+        try {
+            String blockId = HIRPlugin.getInstance().getEnergySystem().getBlockId(world, x, y, z);
+            if (blockId != null && (blockId.equalsIgnoreCase("Water") || blockId.toLowerCase().contains("water"))) {
+                return true;
+            }
+        } catch (Exception ignored) {
+        }
+
         return false;
     }
 
