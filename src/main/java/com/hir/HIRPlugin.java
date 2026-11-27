@@ -12,7 +12,6 @@ import com.hypixel.hytale.server.core.event.events.player.AddPlayerToWorldEvent;
 import com.hypixel.hytale.server.core.plugin.JavaPlugin;
 import com.hypixel.hytale.server.core.plugin.JavaPluginInit;
 import com.hypixel.hytale.server.core.universe.world.World;
-import org.joml.Vector3i;
 
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
@@ -53,7 +52,7 @@ public class HIRPlugin extends JavaPlugin {
     protected void setup() {
         getLogger().at(Level.INFO).log("=================================================");
         getLogger().at(Level.INFO).log("[HIR] Inicializando Hytale Industrial Revolution");
-        getLogger().at(Level.INFO).log("[HIR] Versao: 0.0.1-TEST (Era 1: Roda d'Agua)");
+        getLogger().at(Level.INFO).log("[HIR] Versao: 0.0.1-TEST (Era 1: Roda d'Agua + Eixo Mecanico)");
         getLogger().at(Level.INFO).log("=================================================");
 
         // Registro de comandos
@@ -82,12 +81,12 @@ public class HIRPlugin extends JavaPlugin {
         World world = event.getWorld();
         if (world != null && !activeTickerWorlds.contains(world.getName())) {
             activeTickerWorlds.add(world.getName());
-            getLogger().at(Level.INFO).log("[HIR] Ativando monitoramento de maquinas para o mundo: %s", world.getName());
-            scheduleWaterWheelTick(world);
+            getLogger().at(Level.INFO).log("[HIR] Ativando monitoramento de energia e maquinas para o mundo: %s", world.getName());
+            scheduleEnergyTick(world);
         }
     }
 
-    private void scheduleWaterWheelTick(World world) {
+    private void scheduleEnergyTick(World world) {
         if (world == null || !world.isAlive()) {
             activeTickerWorlds.remove(world != null ? world.getName() : "");
             return;
@@ -96,14 +95,12 @@ public class HIRPlugin extends JavaPlugin {
         world.scheduleAfter(() -> {
             try {
                 if (world.isAlive()) {
-                    Set<Vector3i> wheels = machineRegistry.getWaterWheelManager().getKnownWheels();
-                    for (Vector3i pos : wheels) {
-                        machineRegistry.getWaterWheelManager().updateWheelAnimation(world, pos.x, pos.y, pos.z);
-                    }
-                    scheduleWaterWheelTick(world);
+                    // Atualiza toda a rede mecanica conectada no mundo
+                    energySystem.tickWorld(world);
+                    scheduleEnergyTick(world);
                 }
             } catch (Exception e) {
-                getLogger().at(Level.WARNING).log("[HIR] Erro no tick da roda d'agua: %s", e.getMessage());
+                getLogger().at(Level.WARNING).log("[HIR] Erro no tick do sistema de energia: %s", e.getMessage());
             }
         }, 2, TimeUnit.SECONDS);
     }

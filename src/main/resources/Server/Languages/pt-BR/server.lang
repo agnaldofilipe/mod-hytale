@@ -1,3 +1,5 @@
 server.items.HIR_Test_Block.name = Bloco Experimental HIR
 server.items.HIR_Water_Wheel.name = Roda d'Água
 server.items.HIR_Water_Wheel.description = Gera energia cinética mecânica quando colocada em contato com água corrente.
+server.items.HIR_Mechanical_Shaft.name = Eixo Mecânico
+server.items.HIR_Mechanical_Shaft.description = Transmite rotação e energia mecânica horizontalmente entre máquinas e outros eixos conectados.

@@ -1,0 +1,57 @@
+{
+  "TranslationProperties": {
+    "Name": "server.items.HIR_Mechanical_Shaft.name",
+    "Description": "server.items.HIR_Mechanical_Shaft.description"
+  },
+  "Icon": "Icons/ItemsGenerated/HIR_Mechanical_Shaft.png",
+  "Categories": [
+    "Furniture.Benches"
+  ],
+  "Recipe": {
+    "TimeSeconds": 1,
+    "Input": [
+      {
+        "ItemId": "Ingredient_Stick",
+        "Quantity": 4
+      },
+      {
+        "ItemId": "Ingredient_Bar_Iron",
+        "Quantity": 1
+      }
+    ]
+  },
+  "BlockType": {
+    "Material": "Solid",
+    "DrawType": "Model",
+    "Opacity": "Transparent",
+    "CustomModel": "Blocks/HIR/MechanicalShaft.blockymodel",
+    "CustomModelTexture": [
+      {
+        "Texture": "Blocks/HIR/WaterWheel_Texture.png",
+        "Weight": 1
+      }
+    ],
+    "CustomModelAnimation": "Blocks/HIR/MechanicalShaft_Spin.blockyanim",
+    "Looping": true,
+    "CustomModelScale": 1,
+    "VariantRotation": "NESW",
+    "Gathering": {
+      "Breaking": {
+        "GatherType": "Woods"
+      }
+    },
+    "BlockParticleSetId": "Wood",
+    "BlockSoundSetId": "Wood",
+    "PhysicalMaterialId": "Wood",
+    "ParticleColor": "#8B5A2B",
+    "TextureComputedColor": "#6E451E"
+  },
+  "Tags": {
+    "Type": [
+      "Machine",
+      "HIR"
+    ]
+  },
+  "MaxStack": 64,
+  "Parent": "Rock_Stone"
+}

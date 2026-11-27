@@ -1,0 +1,126 @@
+{
+  "nodes": [
+    {
+      "id": "1",
+      "name": "R-Attachment",
+      "position": { "x": 0, "y": 0, "z": 0 },
+      "orientation": { "x": 0, "y": 0, "z": 0, "w": 1 },
+      "shape": {
+        "type": "none",
+        "offset": { "x": 0, "y": 0, "z": 0 },
+        "stretch": { "x": 1, "y": 1, "z": 1 },
+        "settings": { "isPiece": true },
+        "visible": true,
+        "doubleSided": false,
+        "shadingMode": "standard",
+        "unwrapMode": "custom",
+        "textureLayout": {}
+      },
+      "children": [
+        {
+          "id": "2",
+          "name": "Stand_Base",
+          "position": { "x": 0, "y": 2, "z": 0 },
+          "orientation": { "x": 0, "y": 0, "z": 0, "w": 1 },
+          "shape": {
+            "type": "box",
+            "settings": { "size": { "x": 14, "y": 4, "z": 14 } },
+            "offset": { "x": 0, "y": 0, "z": 0 },
+            "stretch": { "x": 1, "y": 1, "z": 1 },
+            "unwrapMode": "custom",
+            "visible": true,
+            "doubleSided": false,
+            "shadingMode": "standard",
+            "textureLayout": {
+              "top": { "offset": { "x": 0, "y": 16 } },
+              "bottom": { "offset": { "x": 0, "y": 16 } },
+              "front": { "offset": { "x": 0, "y": 24 } },
+              "back": { "offset": { "x": 0, "y": 24 } },
+              "left": { "offset": { "x": 0, "y": 32 } },
+              "right": { "offset": { "x": 0, "y": 32 } }
+            }
+          },
+          "children": [
+            {
+              "id": "3",
+              "name": "Stand_Pillar",
+              "position": { "x": 0, "y": 7, "z": 0 },
+              "orientation": { "x": 0, "y": 0, "z": 0, "w": 1 },
+              "shape": {
+                "type": "box",
+                "settings": { "size": { "x": 8, "y": 10, "z": 8 } },
+                "offset": { "x": 0, "y": 0, "z": 0 },
+                "stretch": { "x": 1, "y": 1, "z": 1 },
+                "unwrapMode": "custom",
+                "visible": true,
+                "doubleSided": false,
+                "shadingMode": "standard",
+                "textureLayout": {
+                  "top": { "offset": { "x": 0, "y": 0 } },
+                  "bottom": { "offset": { "x": 0, "y": 0 } },
+                  "front": { "offset": { "x": 16, "y": 0 } },
+                  "back": { "offset": { "x": 16, "y": 0 } },
+                  "left": { "offset": { "x": 16, "y": 16 } },
+                  "right": { "offset": { "x": 16, "y": 16 } }
+                }
+              },
+              "children": []
+            }
+          ]
+        },
+        {
+          "id": "10",
+          "name": "Shaft",
+          "position": { "x": 0, "y": 16, "z": 0 },
+          "orientation": { "x": 0, "y": 0, "z": 0, "w": 1 },
+          "shape": {
+            "type": "box",
+            "settings": { "size": { "x": 32, "y": 6, "z": 6 } },
+            "offset": { "x": 0, "y": 0, "z": 0 },
+            "stretch": { "x": 1, "y": 1, "z": 1 },
+            "unwrapMode": "custom",
+            "visible": true,
+            "doubleSided": false,
+            "shadingMode": "standard",
+            "textureLayout": {
+              "top": { "offset": { "x": 0, "y": 16 } },
+              "bottom": { "offset": { "x": 0, "y": 16 } },
+              "front": { "offset": { "x": 0, "y": 24 } },
+              "back": { "offset": { "x": 0, "y": 24 } },
+              "left": { "offset": { "x": 0, "y": 0 } },
+              "right": { "offset": { "x": 0, "y": 0 } }
+            }
+          },
+          "children": [
+            {
+              "id": "11",
+              "name": "Shaft_Core",
+              "position": { "x": 0, "y": 0, "z": 0 },
+              "orientation": { "x": 0, "y": 0, "z": 0, "w": 1 },
+              "shape": {
+                "type": "box",
+                "settings": { "size": { "x": 10, "y": 8, "z": 8 } },
+                "offset": { "x": 0, "y": 0, "z": 0 },
+                "stretch": { "x": 1, "y": 1, "z": 1 },
+                "unwrapMode": "custom",
+                "visible": true,
+                "doubleSided": false,
+                "shadingMode": "standard",
+                "textureLayout": {
+                  "top": { "offset": { "x": 16, "y": 0 } },
+                  "bottom": { "offset": { "x": 16, "y": 0 } },
+                  "front": { "offset": { "x": 16, "y": 0 } },
+                  "back": { "offset": { "x": 16, "y": 0 } },
+                  "left": { "offset": { "x": 0, "y": 0 } },
+                  "right": { "offset": { "x": 0, "y": 0 } }
+                }
+              },
+              "children": []
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "lod": "auto"
+}

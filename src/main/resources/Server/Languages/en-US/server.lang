@@ -1,3 +1,5 @@
 server.items.HIR_Test_Block.name = Bloco Experimental HIR
 server.items.HIR_Water_Wheel.name = Water Wheel
 server.items.HIR_Water_Wheel.description = Generates mechanical kinetic energy when in contact with flowing water.
+server.items.HIR_Mechanical_Shaft.name = Mechanical Shaft
+server.items.HIR_Mechanical_Shaft.description = Transmits mechanical rotation energy between machines and connected shafts.
