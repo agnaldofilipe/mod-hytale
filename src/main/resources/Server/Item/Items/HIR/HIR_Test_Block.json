@@ -1,0 +1,34 @@
+{
+  "TranslationProperties": {
+    "Name": "server.items.HIR_Test_Block.name"
+  },
+  "Set": "HIR_Test_Block",
+  "BlockType": {
+    "Gathering": {
+      "Breaking": {
+        "GatherType": "Rocks"
+      }
+    },
+    "Textures": [
+      {
+        "Weight": 1,
+        "Sides": "BlockTextures/Metal_Iron.png",
+        "UpDown": "BlockTextures/Metal_Iron_Smooth.png"
+      }
+    ],
+    "ParticleColor": "#cccccc",
+    "TextureComputedColor": "#8D9499"
+  },
+  "ResourceTypes": [
+    {
+      "Id": "Rock"
+    }
+  ],
+  "Tags": {
+    "Type": [
+      "Machine",
+      "HIR"
+    ]
+  },
+  "Parent": "Rock_Stone"
+}

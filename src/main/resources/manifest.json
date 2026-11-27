@@ -1,0 +1,17 @@
+{
+  "Group": "HIR",
+  "Name": "HytaleIndustrialRevolution",
+  "Version": "0.0.1-TEST",
+  "Description": "Hytale Industrial Revolution (HIR) - Mod de tecnologia, energia e maquinas industriais.",
+  "Authors": [
+    {
+      "Name": "Agnaldo Filipe"
+    }
+  ],
+  "ServerVersion": "*",
+  "Main": "com.hir.HIRPlugin",
+  "IncludesAssetPack": true,
+  "DisabledByDefault": false,
+  "Dependencies": {},
+  "OptionalDependencies": {}
+}

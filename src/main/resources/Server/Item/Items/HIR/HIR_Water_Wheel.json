@@ -1,0 +1,57 @@
+{
+  "TranslationProperties": {
+    "Name": "server.items.HIR_Water_Wheel.name",
+    "Description": "server.items.HIR_Water_Wheel.description"
+  },
+  "Icon": "Icons/ItemsGenerated/HIR_Water_Wheel.png",
+  "Categories": [
+    "Furniture.Benches"
+  ],
+  "Recipe": {
+    "TimeSeconds": 2,
+    "Input": [
+      {
+        "ItemId": "Ingredient_Stick",
+        "Quantity": 8
+      },
+      {
+        "ItemId": "Ingredient_Bar_Iron",
+        "Quantity": 2
+      }
+    ]
+  },
+  "BlockType": {
+    "Material": "Solid",
+    "DrawType": "Model",
+    "Opacity": "Transparent",
+    "CustomModel": "Blocks/HIR/WaterWheel.blockymodel",
+    "CustomModelTexture": [
+      {
+        "Texture": "Blocks/HIR/WaterWheel_Texture.png",
+        "Weight": 1
+      }
+    ],
+    "CustomModelAnimation": "Blocks/HIR/WaterWheel_Spin.blockyanim",
+    "Looping": true,
+    "CustomModelScale": 1,
+    "VariantRotation": "NESW",
+    "Gathering": {
+      "Breaking": {
+        "GatherType": "Woods"
+      }
+    },
+    "BlockParticleSetId": "Wood",
+    "BlockSoundSetId": "Wood",
+    "PhysicalMaterialId": "Wood",
+    "ParticleColor": "#8B5A2B",
+    "TextureComputedColor": "#6E451E"
+  },
+  "Tags": {
+    "Type": [
+      "Machine",
+      "HIR"
+    ]
+  },
+  "MaxStack": 10,
+  "Parent": "Rock_Stone"
+}

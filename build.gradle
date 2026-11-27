@@ -1,0 +1,38 @@
+plugins {
+    id 'java'
+}
+
+group = 'com.hir'
+version = '0.0.1-TEST'
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(25)
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+def hytaleDir = System.getenv("APPDATA") + "/Hytale/install/release/package/game/latest/Server"
+def hytaleServerJar = file("${hytaleDir}/HytaleServer.jar")
+
+dependencies {
+    compileOnly files(hytaleServerJar)
+}
+
+jar {
+    archiveBaseName.set('HytaleIndustrialRevolution')
+    archiveVersion.set('0.0.1-TEST')
+    
+    from('src/main/resources') {
+        include '**/*'
+    }
+}
+
+tasks.register('installMod', Copy) {
+    dependsOn jar
+    from jar.archiveFile
+    into file(System.getenv("APPDATA") + "/Hytale/UserData/Mods")
+}

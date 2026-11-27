@@ -1,0 +1,23 @@
+# Build outputs
+build/
+bin/
+out/
+target/
+
+# Gradle
+.gradle/
+
+# IDEs
+.idea/
+*.iml
+.vscode/
+.project
+.classpath
+.settings/
+
+# Temp files
+*.log
+test-run/
+telemetry/
+
+mods/
